@@ -1,0 +1,152 @@
+[
+  {
+    "code": "ag",
+    "name": "Agriculture Law",
+    "description": "Agriculture Code: Farming, ranching, livestock, crops, seeds, pests, diseases, aquaculture, agricultural markets, branding, fences, extensions."
+  },
+  {
+    "code": "al",
+    "name": "Alcohol & Beverage",
+    "description": "Alcoholic Beverage Code: Liquor, beer, wine, licensing, manufacturing, distribution, sale, enforcement, TABC regulations."
+  },
+  {
+    "code": "BC",
+    "name": "Business & Commerce",
+    "description": "Business & Commerce Code: UCC, statute of frauds, deceptive trade practices (DTPA), competition, identity theft, contests, warranties, business rights."
+  },
+  {
+    "code": "bo",
+    "name": "Business Organizations",
+    "description": "Business Organizations Code: Corporations, LLCs, partnerships, non-profits, professional associations, mergers, dissolution, governance."
+  },
+  {
+    "code": "cn",
+    "name": "Texas Constitution",
+    "description": "Texas Constitution: Bill of Rights, legislature, executive, judicial branches, suffrage, education, taxation, counties, railroads, impeachment, general provisions."
+  },
+  {
+    "code": "CP",
+    "name": "Civil Practice & Remedies",
+    "description": "Civil Practice and Remedies Code: Lawsuits, liability, immunity, damages, limitations, venue, evidence, arbitration, medical malpractice, appeals."
+  },
+  {
+    "code": "cr",
+    "name": "Criminal Procedure",
+    "description": "Code of Criminal Procedure: Arrests, bail, warrants, trials, sentencing, grand jury, discovery, habeas corpus, statutes of limitations for crimes."
+  },
+  {
+    "code": "cv",
+    "name": "Vernon's Civil Statutes",
+    "description": "Vernon's Civil Statutes: Miscellaneous uncodified civil laws (legacy statutes not yet moved to other codes)."
+  },
+  {
+    "code": "ed",
+    "name": "Education Law",
+    "description": "Education Code: Public schools, school districts, teachers, students, higher education, funding, discipline, curriculums, school boards."
+  },
+  {
+    "code": "el",
+    "name": "Election Law",
+    "description": "Election Code: Voter registration, ballots, polling places, candidates, campaigns, political parties, election contests, recount procedures."
+  },
+  {
+    "code": "ES",
+    "name": "Estates",
+    "description": "Estates Code: Wills, probate, descent and distribution, guardianship, powers of attorney, heirs, estate administration."
+  },
+  {
+    "code": "FA",
+    "name": "Family Law",
+    "description": "Family Code: Marriage, divorce, child custody (SAPCR), child support, adoption, protective orders, juvenile justice, parental rights."
+  },
+  {
+    "code": "GV",
+    "name": "Government",
+    "description": "Government Code: State agencies, open meetings, public information (PIA), public officers, state purchasing, courts, judges, notary public."
+  },
+  {
+    "code": "hr",
+    "name": "Human Resources",
+    "description": "Human Resources Code: Social services, elderly protection, rights of marginalized, rehabilitation commissions, human services agencies."
+  },
+  {
+    "code": "HS",
+    "name": "Health & Safety",
+    "description": "Health and Safety Code: Public health, hospitals, sanitation, vital statistics, mental health, controlled substances, safety regulations, animals."
+  },
+  {
+    "code": "i1",
+    "name": "Insurance (supplemental)",
+    "description": "Insurance Code (supplemental): Additional insurance regulations not yet fully codified, industrial insurance, specialty coverage."
+  },
+  {
+    "code": "IN",
+    "name": "Insurance",
+    "description": "Insurance Code: Insurance policies, insurers, rates, agents, regulation, consumer protection, health, life, property, casualty insurance."
+  },
+  {
+    "code": "la",
+    "name": "Labor Law",
+    "description": "Labor Code: Employment, workers' compensation, wages, paydays, discrimination (state level), labor unions, unemployment."
+  },
+  {
+    "code": "lg",
+    "name": "Local Government",
+    "description": "Local Government Code: Municipalities (cities), counties, zoning, ordinances, civil service, platting, annexation, public services."
+  },
+  {
+    "code": "nr",
+    "name": "Natural Resources",
+    "description": "Natural Resources Code: Oil and gas, mines, timber, public land management, beaches, dunes, wetlands, land office."
+  },
+  {
+    "code": "OC",
+    "name": "Occupations",
+    "description": "Occupations Code: Licensing and regulation of professions (doctors, lawyers, plumbers, electricians, etc.), health professions, trades."
+  },
+  {
+    "code": "pe",
+    "name": "Penal Code",
+    "description": "Penal Code: Criminal offenses (theft, assault, homicide, fraud, etc.), penalties, defenses, criminal culpability, punishments."
+  },
+  {
+    "code": "pr",
+    "name": "Property Law",
+    "description": "Property Code: Real estate, conveyances, deeds, liens, landlord-tenant, HOAs, trusts, escheat, mechanics liens, homesteads."
+  },
+  {
+    "code": "pw",
+    "name": "Parks & Wildlife",
+    "description": "Parks and Wildlife Code: State parks, hunting, fishing, boating, wildlife conservation, licenses, water safety."
+  },
+  {
+    "code": "sd",
+    "name": "Special Districts / Social Services",
+    "description": "Special Districts: Social services districts, community supervision, child welfare services, developmental disability services."
+  },
+  {
+    "code": "tn",
+    "name": "Transportation",
+    "description": "Transportation Code: Roads, highways, vehicles, driver's licenses, traffic laws (rules of the road), vehicle registration, aviation."
+  },
+  {
+    "code": "tx",
+    "name": "Tax Law",
+    "description": "Tax Code: Property tax, sales tax, franchise tax, hotel tax, appraisal districts, exemptions, tax collection."
+  },
+  {
+    "code": "ut",
+    "name": "Utilities",
+    "description": "Utilities Code: Electricity, water, gas, telecommunications, deregulation, PUC regulations, rates, services."
+  },
+  {
+    "code": "wa",
+    "name": "Water Code",
+    "description": "Water Code: Water rights, water districts, flood control, drainage, irrigation, water quality, conservation."
+  },
+  {
+    "code": "wl",
+    "name": "Auxiliary Water Laws",
+    "description": "Auxiliary Water Laws: Uncodified water laws, special water districts, river authorities (supplemental to Water Code)."
+  }
+]
