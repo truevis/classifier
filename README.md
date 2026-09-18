@@ -1,12 +1,14 @@
 ﻿# Classifier: OpenRouter + TypeSafe Jev
 
-Bare-bones Python demo that uses **[TypeSafe Jev](https://openrouter.ai/~typesafe/jev-latest)** through the **OpenRouter Decisions API** to recommend which Texas statute databases should be searched for a legal research prompt.
+Bare-bones Python demo that uses **[TypeSafe Jev](https://openrouter.ai/~typesafe/jev-latest)** ([@typesafeai](https://x.com/typesafeai)) through the **OpenRouter Decisions API** to recommend which Texas statute databases should be searched for a legal research prompt.
 
 This is a multi-label **classifier**, not a chat bot. Jev does not generate prose. It answers typed questions about a `state` and returns calibrated probabilities.
 
 Live chatbot that motivates this pattern: [aifab-law-tx.streamlit.app](https://aifab-law-tx.streamlit.app)
 
 The statute databases in `databases.json` are similar to those used in the live app at [law-tx.aifab.xyz](https://law-tx.aifab.xyz/).
+
+![Per-prompt recommendations from the HTML report](assets/per-prompt-recommendations.png)
 
 ## What a `noul` is
 
@@ -117,14 +119,19 @@ payload = {
 | `report_common.py` | Shared JSON validation / ranking helpers |
 | `report_db_recommendations.py` | Markdown report |
 | `write_html_report.py` | Single-file HTML report |
+| `requirements.txt` | Python dependencies |
 | `.env.example` | API key placeholder |
+| `LICENSE` | WTFPL |
+| `db_recommendations.json` | Sample classifier output (from `choose_db.py`) |
+| `db_recommendations_report.md` | Sample markdown report |
+| `index.html` | Sample HTML report |
+| `assets/per-prompt-recommendations.png` | Screenshot of per-prompt scores |
 
 ## Notes
 
 - Requires network access to OpenRouter.
-- Sample prompts and database descriptions are illustrative Texas-law catalog entries for the demo.
+- Sample prompts and database descriptions are illustrative Texas-law catalog entries for the demo (similar to [law-tx.aifab.xyz](https://law-tx.aifab.xyz/)).
 - HTML report intentionally omits per-token price rates; token counts and wall-clock time are still shown when present in the JSON.
-- Not wired into a live search stack. Compare outputs, tune `--threshold` / `--top-k`, then integrate if it fits your app.
 
 ## License
 
