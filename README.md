@@ -6,6 +6,8 @@ This is a multi-label **classifier**, not a chat bot. Jev does not generate pros
 
 Live chatbot that motivates this pattern: [aifab-law-tx.streamlit.app](https://aifab-law-tx.streamlit.app)
 
+The statute databases in `databases.json` are similar to those used in the live app at [law-tx.aifab.xyz](https://law-tx.aifab.xyz/).
+
 ## What a `noul` is
 
 A **noul** is Jev's yes/no question type. You supply instructions (a question or a statement). Jev returns a probability from **0 to 1** for "yes" / "this holds".
@@ -126,4 +128,4 @@ payload = {
 
 ## License
 
-MIT
+[Do What The Fuck You Want To Public License](http://www.wtfpl.net/) (WTFPL)

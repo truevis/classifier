@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DB recommendations report</title>
+  <style>
+:root {
+  --ink: #1c2430;
+  --muted: #5b6675;
+  --line: #d7dde5;
+  --paper: #f7f5f0;
+  --panel: #ffffff;
+  --accent: #1f4b63;
+  --accent-soft: #e6eef2;
+  --bar: #6b8797;
+  --score: #2f6b4f;
+  --shadow: 0 1px 2px rgba(28, 36, 48, 0.04), 0 12px 28px rgba(28, 36, 48, 0.06);
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --sans: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --mono: "Cascadia Mono", "Consolas", "Liberation Mono", monospace;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 500px at 10% -10%, #ebe6dc 0%, transparent 55%),
+    radial-gradient(900px 420px at 100% 0%, #e4ebef 0%, transparent 50%),
+    var(--paper);
+  font-family: var(--sans);
+  line-height: 1.55;
+}
+a { color: var(--accent); }
+.page {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 4rem;
+}
+.hero {
+  margin-bottom: 1.75rem;
+  padding: 0.25rem 0 0.5rem;
+  border-bottom: 1px solid var(--line);
+}
+.hero .kicker {
+  margin: 0 0 0.55rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.hero h1 {
+  margin: 0 0 0.55rem;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(1.9rem, 3.4vw, 2.55rem);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+.hero .subtitle {
+  margin: 0;
+  max-width: 42rem;
+  color: var(--muted);
+  font-size: 1.02rem;
+}
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  border-radius: 4px;
+  padding: 1.35rem 1.35rem 1.45rem;
+  margin-bottom: 1.25rem;
+}
+.section-head { margin-bottom: 1rem; }
+.eyebrow {
+  margin: 0 0 0.3rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.section-head h2 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.45rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.lede {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.metric {
+  background: var(--accent-soft);
+  border: 1px solid #d0dde4;
+  border-radius: 3px;
+  padding: 0.7rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.metric-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.metric-value {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+.detail-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.45rem;
+}
+.detail-list li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.85rem;
+  align-items: baseline;
+  padding: 0.35rem 0;
+  border-top: 1px solid var(--line);
+  font-size: 0.95rem;
+}
+.detail-list li span {
+  min-width: 9.5rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.toc-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+.toc-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  background: var(--accent-soft);
+  border: 1px solid #d0dde4;
+  border-radius: 999px;
+  padding: 0.28rem 0.7rem;
+  font-size: 0.86rem;
+  color: var(--accent);
+}
+.toc-link:hover { background: #d9e6ec; }
+.back-top {
+  margin: 0.75rem 0 0;
+  font-size: 0.82rem;
+}
+.table-wrap { overflow-x: auto; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+th, td {
+  padding: 0.65rem 0.55rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: middle;
+}
+th {
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+code {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  background: #f0eee8;
+  border: 1px solid #e2ddd3;
+  border-radius: 2px;
+  padding: 0.05rem 0.3rem;
+}
+.pct-cell, .score-cell {
+  position: relative;
+  min-width: 6.5rem;
+}
+.pct-bar, .score-bar {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 0.55rem;
+  border-radius: 999px;
+  opacity: 0.28;
+  max-width: 100%;
+}
+.pct-bar { background: var(--bar); }
+.score-bar { background: var(--score); }
+.pct-text, .score-text { position: relative; z-index: 1; }
+.prompt-list { display: grid; gap: 1rem; }
+.prompt-card {
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 1rem 1.05rem 1.1rem;
+  background: linear-gradient(180deg, #fcfbf8 0%, #ffffff 40%);
+}
+.prompt-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.55rem;
+}
+.prompt-index {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 700;
+}
+.chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  background: var(--accent-soft);
+  border: 1px solid #d0dde4;
+  border-radius: 999px;
+  padding: 0.1rem 0.15rem;
+}
+.chip code {
+  background: transparent;
+  border: 0;
+  padding: 0.05rem 0.45rem;
+}
+.prompt-text {
+  margin: 0 0 0.55rem;
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  line-height: 1.45;
+}
+.prompt-meta {
+  margin: 0 0 0.75rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+.empty, .empty-note {
+  color: var(--muted);
+  font-style: italic;
+}
+.footer {
+  margin-top: 1.5rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+  text-align: center;
+}
+@media (max-width: 640px) {
+  .page { padding: 1.5rem 0.9rem 3rem; }
+  .panel { padding: 1.05rem; }
+  .detail-list li span { min-width: 100%; }
+}
+</style>
+</head>
+<body>
+  <div class="page" id="top">
+    <header class="hero">
+      <p class="kicker">AIFAB Law · Classifier</p>
+      <h1>DB recommendations report</h1>
+      <p class="subtitle">
+        Which statute databases the classifier selected for each research prompt,
+        with confidence scores and run economics.
+      </p>
+    </header>
+    
+<section class="panel summary">
+  <div class="section-head">
+    <p class="eyebrow">Overview</p>
+    <h2>Run summary</h2>
+  </div>
+  <div class="metrics"><div class="metric"><span class="metric-label">Prompts</span><span class="metric-value">7</span></div>
+<div class="metric"><span class="metric-label">Unique DBs</span><span class="metric-value">8</span></div>
+<div class="metric"><span class="metric-label">Avg DBs / prompt</span><span class="metric-value">1.29</span></div>
+<div class="metric"><span class="metric-label">Threshold</span><span class="metric-value">0.5</span></div>
+<div class="metric"><span class="metric-label">Query time</span><span class="metric-value">10.58s</span></div></div>
+  <ul class="detail-list">
+    <li><span>Model</span><code>~typesafe/jev-latest</code></li><li><span>Top-k fallback</span><strong>3</strong></li><li><span>Generated at (UTC)</span><code>2026-09-18T17:08:14Z</code></li><li><span>Tokens</span><strong>in 19852 · out 3395 · total 23247</strong></li><li><span>Wall-clock</span><strong>10.59s</strong></li>
+  </ul>
+</section>
+
+    
+<section class="panel">
+  <div class="section-head">
+    <p class="eyebrow">Coverage</p>
+    <h2>Frequency by database</h2>
+    <p class="lede">Share of prompts that recommended each database.</p>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Display name</th>
+          <th class="num">Count</th>
+          <th class="num">% of prompts</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>CP</code></td><td>Civil Practice &amp; Remedies</td><td class='num'>2</td><td class='num pct-cell'><span class='pct-bar' style='width:28.6%'></span><span class='pct-text'>28.6%</span></td></tr><tr><td><code>la</code></td><td>Labor Law</td><td class='num'>1</td><td class='num pct-cell'><span class='pct-bar' style='width:14.3%'></span><span class='pct-text'>14.3%</span></td></tr><tr><td><code>nr</code></td><td>Natural Resources</td><td class='num'>1</td><td class='num pct-cell'><span class='pct-bar' style='width:14.3%'></span><span class='pct-text'>14.3%</span></td></tr><tr><td><code>lg</code></td><td>Local Government</td><td class='num'>1</td><td class='num pct-cell'><span class='pct-bar' style='width:14.3%'></span><span class='pct-text'>14.3%</span></td></tr><tr><td><code>OC</code></td><td>Occupations</td><td class='num'>1</td><td class='num pct-cell'><span class='pct-bar' style='width:14.3%'></span><span class='pct-text'>14.3%</span></td></tr><tr><td><code>HS</code></td><td>Health &amp; Safety</td><td class='num'>1</td><td class='num pct-cell'><span class='pct-bar' style='width:14.3%'></span><span class='pct-text'>14.3%</span></td></tr><tr><td><code>pe</code></td><td>Penal Code</td><td class='num'>1</td><td class='num pct-cell'><span class='pct-bar' style='width:14.3%'></span><span class='pct-text'>14.3%</span></td></tr><tr><td><code>FA</code></td><td>Family Law</td><td class='num'>1</td><td class='num pct-cell'><span class='pct-bar' style='width:14.3%'></span><span class='pct-text'>14.3%</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+    <section class="panel toc"><div class="section-head"><p class="eyebrow">Navigate</p><h2>Jump to prompt</h2><p class="lede">Skip to a specific recommendation card.</p></div><nav class="toc-list" aria-label="Prompt index"><a class="toc-link" href="#prompt-0">Prompt 0 (CP, la, nr)</a><a class="toc-link" href="#prompt-1">Prompt 1 (CP)</a><a class="toc-link" href="#prompt-2">Prompt 2 (lg)</a><a class="toc-link" href="#prompt-3">Prompt 3 (OC)</a><a class="toc-link" href="#prompt-4">Prompt 4 (HS)</a><a class="toc-link" href="#prompt-5">Prompt 5 (pe)</a><a class="toc-link" href="#prompt-6">Prompt 6 (FA)</a></nav></section>
+    
+<section class="panel prompts">
+  <div class="section-head">
+    <p class="eyebrow">Detail</p>
+    <h2>Per-prompt recommendations</h2>
+    <p class="lede">Scores sorted descending within each prompt.</p>
+  </div>
+  <div class="prompt-list">
+    
+<article class="prompt-card" id="prompt-0">
+  <header class="prompt-head">
+    <p class="prompt-index">Prompt 0</p>
+    <div class="chips"><span class="chip"><code>CP</code></span><span class="chip"><code>la</code></span><span class="chip"><code>nr</code></span></div>
+  </header>
+  <p class="prompt-text">Outline potential liability claims after a fatal oil rig explosion under OSHA and federal law</p>
+  <p class="prompt-meta">Query: 1.76s, 2822 input tokens</p>
+  
+<div class="table-wrap compact">
+  <table>
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Display name</th>
+        <th class="num">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>CP</code></td><td>Civil Practice &amp; Remedies</td><td class='num score-cell'><span class='score-bar' style='width:84.0%'></span><span class='score-text'>0.840</span></td></tr><tr><td><code>la</code></td><td>Labor Law</td><td class='num score-cell'><span class='score-bar' style='width:70.0%'></span><span class='score-text'>0.700</span></td></tr><tr><td><code>nr</code></td><td>Natural Resources</td><td class='num score-cell'><span class='score-bar' style='width:66.0%'></span><span class='score-text'>0.660</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+  <p class="back-top"><a href="#top">Back to top</a></p>
+</article>
+
+
+<article class="prompt-card" id="prompt-1">
+  <header class="prompt-head">
+    <p class="prompt-index">Prompt 1</p>
+    <div class="chips"><span class="chip"><code>CP</code></span></div>
+  </header>
+  <p class="prompt-text">Draft a motion to compel arbitration template in a consumer dispute</p>
+  <p class="prompt-meta">Query: 1.19s, 2817 input tokens</p>
+  
+<div class="table-wrap compact">
+  <table>
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Display name</th>
+        <th class="num">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>CP</code></td><td>Civil Practice &amp; Remedies</td><td class='num score-cell'><span class='score-bar' style='width:95.0%'></span><span class='score-text'>0.950</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+  <p class="back-top"><a href="#top">Back to top</a></p>
+</article>
+
+
+<article class="prompt-card" id="prompt-2">
+  <header class="prompt-head">
+    <p class="prompt-index">Prompt 2</p>
+    <div class="chips"><span class="chip"><code>lg</code></span></div>
+  </header>
+  <p class="prompt-text">Analyze standing requirements for challenging municipal zoning decisions</p>
+  <p class="prompt-meta">Query: 1.68s, 2815 input tokens</p>
+  
+<div class="table-wrap compact">
+  <table>
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Display name</th>
+        <th class="num">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>lg</code></td><td>Local Government</td><td class='num score-cell'><span class='score-bar' style='width:92.0%'></span><span class='score-text'>0.920</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+  <p class="back-top"><a href="#top">Back to top</a></p>
+</article>
+
+
+<article class="prompt-card" id="prompt-3">
+  <header class="prompt-head">
+    <p class="prompt-index">Prompt 3</p>
+    <div class="chips"><span class="chip"><code>OC</code></span></div>
+  </header>
+  <p class="prompt-text">Draft a *template* subcontractor agreement for electrical installation work with placeholders and compliance checklist</p>
+  <p class="prompt-meta">Query: 1.16s, 2824 input tokens</p>
+  
+<div class="table-wrap compact">
+  <table>
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Display name</th>
+        <th class="num">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>OC</code></td><td>Occupations</td><td class='num score-cell'><span class='score-bar' style='width:83.0%'></span><span class='score-text'>0.830</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+  <p class="back-top"><a href="#top">Back to top</a></p>
+</article>
+
+
+<article class="prompt-card" id="prompt-4">
+  <header class="prompt-head">
+    <p class="prompt-index">Prompt 4</p>
+    <div class="chips"><span class="chip"><code>HS</code></span></div>
+  </header>
+  <p class="prompt-text">Analyze OSHA compliance risks related to electrical safety on a construction site</p>
+  <p class="prompt-meta">Query: 0.72s, 2820 input tokens</p>
+  
+<div class="table-wrap compact">
+  <table>
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Display name</th>
+        <th class="num">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>HS</code></td><td>Health &amp; Safety</td><td class='num score-cell'><span class='score-bar' style='width:64.0%'></span><span class='score-text'>0.640</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+  <p class="back-top"><a href="#top">Back to top</a></p>
+</article>
+
+
+<article class="prompt-card" id="prompt-5">
+  <header class="prompt-head">
+    <p class="prompt-index">Prompt 5</p>
+    <div class="chips"><span class="chip"><code>pe</code></span></div>
+  </header>
+  <p class="prompt-text">Does Stand Your Ground law permit the use of force to remove squatters when law enforcement refuses to respond?</p>
+  <p class="prompt-meta">Query: 2.28s, 2828 input tokens</p>
+  
+<div class="table-wrap compact">
+  <table>
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Display name</th>
+        <th class="num">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>pe</code></td><td>Penal Code</td><td class='num score-cell'><span class='score-bar' style='width:87.0%'></span><span class='score-text'>0.870</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+  <p class="back-top"><a href="#top">Back to top</a></p>
+</article>
+
+
+<article class="prompt-card" id="prompt-6">
+  <header class="prompt-head">
+    <p class="prompt-index">Prompt 6</p>
+    <div class="chips"><span class="chip"><code>FA</code></span></div>
+  </header>
+  <p class="prompt-text">A spouse owns a high-growth, closely-held business established prior to marriage (separate property), which expanded exponentially during the marriage due to their personal efforts, while the other spouse managed the household. Analyze how Texas courts evaluate a community estate&#x27;s reimbursement claim for the value of &#x27;time, toil, and talent&#x27; under the Jensen doctrine versus a claim for separate property appreciation, the statutory rules under Texas Family Code Chapter 3, Subchapter E for offsetting benefits, and how to trace separate property capital contributions made to the business under the clear and convincing evidence standard.</p>
+  <p class="prompt-meta">Query: 1.80s, 2926 input tokens</p>
+  
+<div class="table-wrap compact">
+  <table>
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Display name</th>
+        <th class="num">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>FA</code></td><td>Family Law</td><td class='num score-cell'><span class='score-bar' style='width:96.0%'></span><span class='score-text'>0.960</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+  <p class="back-top"><a href="#top">Back to top</a></p>
+</article>
+
+  </div>
+</section>
+
+    <p class="footer">Generated from classifier/db_recommendations.json</p>
+  </div>
+</body>
+</html>

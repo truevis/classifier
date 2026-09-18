@@ -35,10 +35,10 @@ def escape_markdown_cell(text: str) -> str:
     escaped = (
         str(text)
         .replace("\\", "\\\\")
-        .replace("|", "\\\\|")
-        .replace("\\r\\n", " ")
-        .replace("\\n", " ")
-        .replace("\\r", " ")
+        .replace("|", "\\|")
+        .replace("\r\n", " ")
+        .replace("\n", " ")
+        .replace("\r", " ")
     )
     if escaped.lstrip().startswith("#"):
         leading = len(escaped) - len(escaped.lstrip())
@@ -53,8 +53,8 @@ def escape_markdown_prompt(text: str) -> str:
         if line.lstrip().startswith("#"):
             leading = len(line) - len(line.lstrip())
             line = line[:leading] + "\\" + line[leading:]
-        lines.append(line.replace("|", "\\\\|"))
-    return "\\n".join(lines)
+        lines.append(line.replace("|", "\\|"))
+    return "\n".join(lines)
 
 
 def build_report_markdown(payload: Dict[str, Any]) -> str:
@@ -177,7 +177,7 @@ def build_report_markdown(payload: Dict[str, Any]) -> str:
             )
         lines.append("")
 
-    return "\\n".join(lines).rstrip() + "\\n"
+    return "\n".join(lines).rstrip() + "\n"
 
 
 def write_report(json_path: str, out_path: str) -> str:

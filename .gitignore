@@ -10,9 +10,9 @@ __pycache__/
 venv/
 
 # Outputs
-db_recommendations.json
-db_recommendations_report.md
-index.html
+# db_recommendations.json
+# db_recommendations_report.md
+# index.html
 
 # OS / IDE
 .DS_Store
