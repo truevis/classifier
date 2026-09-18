@@ -43,8 +43,9 @@ def get_api_key() -> str:
     return key
 
 
-def load_prompts(path: Path) -> List[str]:
+def load_prompts(path: Path | str) -> List[str]:
     """Load prompts from a one-column CSV (optional header)."""
+    path = Path(path)
     prompts: List[str] = []
     with path.open("r", encoding="utf-8") as f:
         sample = f.read(1024)
@@ -64,8 +65,9 @@ def load_prompts(path: Path) -> List[str]:
     return prompts
 
 
-def load_databases(path: Path) -> List[Dict[str, str]]:
+def load_databases(path: Path | str) -> List[Dict[str, str]]:
     """Load [{code, name, description}, ...] from databases.json."""
+    path = Path(path)
     data = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(data, list) or not data:
         raise ValueError(f"No databases found in {path}")
